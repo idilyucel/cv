@@ -1256,7 +1256,7 @@
     }
 
     .powerup-card {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 3px solid #ffffff;
@@ -1265,16 +1265,43 @@
       box-shadow: 0 12px 35px rgba(186, 150, 230, 0.16);
       position: relative;
       overflow: hidden;
-      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.4, 1), box-shadow 0.3s ease, border-color 0.3s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       opacity: 1 !important;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    /* Shimmer Glow Effect on Hover */
+    .powerup-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 65%);
+      opacity: 0;
+      transform: rotate(25deg);
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .powerup-card:hover::after {
+      opacity: 0.35;
+      animation: shimmerPass 2s infinite linear;
+    }
+
+    @keyframes shimmerPass {
+      0% { transform: translate(-30%, -30%) rotate(25deg); }
+      50% { transform: translate(15%, 15%) rotate(25deg); }
+      100% { transform: translate(-30%, -30%) rotate(25deg); }
     }
 
     .powerup-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: var(--shadow-hover);
+      box-shadow: 0 20px 45px rgba(248, 164, 200, 0.35), 0 0 25px rgba(255, 212, 168, 0.4);
       border-color: #ffffff;
     }
 
@@ -1294,22 +1321,23 @@
     }
 
     .powerup-icon-sphere {
-      width: 72px;
-      height: 72px;
-      border-radius: 24px;
+      width: 76px;
+      height: 76px;
+      border-radius: 26px;
       background: linear-gradient(135deg, #ffffff 0%, #f6eefe 100%);
       border: 2px solid #ffffff;
-      box-shadow: 0 8px 20px rgba(186, 150, 230, 0.2);
+      box-shadow: 0 8px 22px rgba(186, 150, 230, 0.22);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 36px;
+      font-size: 38px;
       margin-bottom: 1.25rem;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
     }
 
     .powerup-card:hover .powerup-icon-sphere {
-      transform: scale(1.15) rotate(6deg);
+      transform: scale(1.18) rotate(8deg);
+      box-shadow: 0 12px 28px rgba(248, 164, 200, 0.45), 0 0 15px rgba(255, 234, 167, 0.5);
     }
 
     .powerup-name {
@@ -4039,6 +4067,28 @@
         lastSparkleTime = now;
         createCursorSparkle(e.clientX, e.clientY);
       }
+    });
+
+    /* ==========================================================================
+       12. INTERACTIVE 3D TILT EFFECT ON CARDS
+       ========================================================================== */
+    const tiltCards = document.querySelectorAll('.powerup-card, .rpg-character-window, .quest-log-parchment, .achievement-popup-box');
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -7;
+        const rotateY = ((x - centerX) / centerX) * 7;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-6px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      });
     });
 
     function createCursorSparkle(x, y) {
