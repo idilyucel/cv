@@ -36,11 +36,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- CDN Dependencies: Three.js r128, GSAP 3.12.5 + ScrollTrigger, Canvas Confetti (with defer) -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <!-- CDN Dependencies: Three.js r128, GSAP 3.12.5 + ScrollTrigger, Canvas Confetti -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <style>
     /* ==========================================================================
@@ -970,7 +970,7 @@
     .section-wrap {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 6.5rem 1.75rem;
+      padding: 4.5rem 1.75rem;
       position: relative;
       z-index: 10;
     }
@@ -978,7 +978,7 @@
     .section-island-header {
       text-align: center;
       max-width: 740px;
-      margin: 0 auto 3.5rem auto;
+      margin: 0 auto 2.25rem auto;
     }
 
     .section-tag-badge {
@@ -1250,8 +1250,8 @@
     .skills-powerups-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-bottom: 3.5rem;
+      gap: 1.75rem;
+      margin-bottom: 2rem;
     }
 
     .powerup-card {
@@ -3261,12 +3261,17 @@
                 onComplete: () => {
                   preloader.style.display = 'none';
                   triggerHeroAnimations();
+                  initScrollAnimations();
                   sound.playChime();
                 }
               });
             } else {
               preloader.style.opacity = '0';
-              setTimeout(() => { preloader.style.display = 'none'; }, 500);
+              setTimeout(() => { 
+                preloader.style.display = 'none'; 
+                triggerHeroAnimations();
+                initScrollAnimations();
+              }, 500);
             }
           }, 350);
         }
@@ -3753,8 +3758,10 @@
       });
     }
 
+    let scrollAnimationsInitialized = false;
     function initScrollAnimations() {
-      if (!window.gsap || !window.ScrollTrigger) return;
+      if (scrollAnimationsInitialized || !window.gsap || !window.ScrollTrigger) return;
+      scrollAnimationsInitialized = true;
       gsap.registerPlugin(ScrollTrigger);
 
       document.querySelectorAll('.section-island-header').forEach(header => {
