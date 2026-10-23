@@ -1,0 +1,4010 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="sakura">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İdil Yücel ✨ Frontend Developer • Portfolyo</title>
+  <meta name="description" content="İdil Yücel - Frontend Developer Portfolyosu. Modern JavaScript, HTML5, SQL ve Yapay Zeka destekli interaktif web deneyimleri." />
+  <meta name="theme-color" content="#f0e8f8" />
+
+  <!-- Google Fonts: Quicksand (Headings), Nunito (Body), Fredoka (Game/Stats) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- CDN Dependencies: Three.js r128, GSAP 3.12.5 + ScrollTrigger, Canvas Confetti -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & PASTEL THEME SYSTEM
+       ========================================================================== */
+    :root, [data-theme="sakura"] {
+      --bg-gradient: linear-gradient(135deg, #fceef5 0%, #f3e7fa 45%, #eaf0fc 100%);
+      --bg-lavender: #f0e6ff;
+      --bg-card: rgba(255, 255, 255, 0.72);
+      --bg-card-solid: #ffffff;
+      --card-border: rgba(255, 255, 255, 0.95);
+      --card-border-subtle: rgba(230, 215, 248, 0.8);
+      
+      --accent-pink: #f8a4c8;
+      --accent-pink-hover: #ff7597;
+      --accent-mint: #8ee2c9;
+      --accent-mint-dark: #3fb99b;
+      --accent-lavender: #bfa3f5;
+      --accent-peach: #ffd4a8;
+      --accent-yellow: #ffeaa7;
+      --accent-blue: #a8d8ea;
+
+      --text-main: #2d1b4e;
+      --text-secondary: #543f73;
+      --text-muted: #7f6e9c;
+      --text-dim: #a69bb8;
+
+      --shadow-soft: 0 16px 40px rgba(186, 150, 230, 0.18);
+      --shadow-hover: 0 22px 50px rgba(248, 164, 200, 0.32);
+      --shadow-btn: 0 6px 0 #e88ea8;
+      --shadow-btn-mint: 0 6px 0 #6cc7ad;
+
+      --font-heading: 'Quicksand', sans-serif;
+      --font-body: 'Nunito', sans-serif;
+      --font-game: 'Fredoka', cursive, sans-serif;
+
+      --mascot-hex: 0xffb8d2;
+    }
+
+    [data-theme="lilac"] {
+      --bg-gradient: linear-gradient(135deg, #f2e9fc 0%, #e8dff5 50%, #f7ebfc 100%);
+      --accent-pink: #c09af7;
+      --accent-pink-hover: #a879f5;
+      --accent-mint: #98e4c9;
+      --accent-lavender: #a684eb;
+      --shadow-btn: 0 6px 0 #9c72e6;
+      --mascot-hex: 0xc8a8ff;
+    }
+
+    [data-theme="mint"] {
+      --bg-gradient: linear-gradient(135deg, #e8f8f2 0%, #def5ea 50%, #eff9f4 100%);
+      --accent-pink: #72d9b8;
+      --accent-pink-hover: #4dc49e;
+      --accent-mint: #ffa8ba;
+      --accent-lavender: #72d9b8;
+      --shadow-btn: 0 6px 0 #4db894;
+      --mascot-hex: 0x8ce2c8;
+    }
+
+    [data-theme="peach"] {
+      --bg-gradient: linear-gradient(135deg, #fff2e6 0%, #fde8d7 50%, #fef3ea 100%);
+      --accent-pink: #ffb088;
+      --accent-pink-hover: #ff9763;
+      --accent-mint: #8ee2c9;
+      --accent-lavender: #ffb088;
+      --shadow-btn: 0 6px 0 #e89163;
+      --mascot-hex: 0xffbe98;
+    }
+
+    /* ==========================================================================
+       RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      line-height: 1.6;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      transition: background 0.5s ease;
+    }
+
+    ::selection {
+      background: rgba(248, 164, 200, 0.45);
+      color: #2d1b4e;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* ==========================================================================
+       CUTE CUSTOM CURSOR (DESKTOP)
+       ========================================================================== */
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 28px;
+      height: 28px;
+      pointer-events: none;
+      z-index: 999999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease-out, opacity 0.3s ease;
+      filter: drop-shadow(0 3px 6px rgba(248, 164, 200, 0.6));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .custom-cursor-star {
+      font-size: 20px;
+      animation: cursorPulse 1.8s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes cursorPulse {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.2) rotate(15deg); }
+    }
+
+    .cursor-sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999998;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff, var(--accent-pink));
+      animation: sparkleFade 0.75s forwards ease-out;
+    }
+
+    @keyframes sparkleFade {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(0.1) translateY(18px); opacity: 0; }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .custom-cursor { display: none !important; }
+    }
+
+    /* ==========================================================================
+       FLOATING BACKGROUND CLOUDS & STARS
+       ========================================================================== */
+    .sky-decorations {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .cloud {
+      position: absolute;
+      opacity: 0.55;
+      filter: drop-shadow(0 10px 15px rgba(200, 180, 230, 0.25));
+      animation: floatCloud linear infinite;
+    }
+
+    .cloud-1 {
+      top: 8%;
+      left: -180px;
+      width: 220px;
+      animation-duration: 48s;
+    }
+
+    .cloud-2 {
+      top: 26%;
+      left: -220px;
+      width: 280px;
+      opacity: 0.45;
+      animation-duration: 65s;
+      animation-delay: -18s;
+    }
+
+    .cloud-3 {
+      top: 55%;
+      left: -200px;
+      width: 240px;
+      opacity: 0.5;
+      animation-duration: 52s;
+      animation-delay: -32s;
+    }
+
+    .cloud-4 {
+      top: 78%;
+      left: -190px;
+      width: 210px;
+      opacity: 0.4;
+      animation-duration: 58s;
+      animation-delay: -10s;
+    }
+
+    @keyframes floatCloud {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(100vw + 350px)); }
+    }
+
+    .star-twinkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      color: #ffd4a8;
+      animation: starBlink 3s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes starBlink {
+      0%, 100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
+      50% { opacity: 0.95; transform: scale(1.35) rotate(45deg); filter: drop-shadow(0 0 8px #ffeaa7); }
+    }
+
+    /* ==========================================================================
+       PRELOADER (RPG ADVENTURE LOADING SCREEN)
+       ========================================================================== */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f8e8f8 0%, #ebe2fc 50%, #e5eefa 100%);
+      z-index: 1000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .preloader-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(24px);
+      border: 3px solid #ffffff;
+      border-radius: 36px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 25px 60px rgba(186, 148, 240, 0.25);
+      position: relative;
+    }
+
+    .preloader-mascot-bounce {
+      font-size: 4rem;
+      display: inline-block;
+      margin-bottom: 1.25rem;
+      animation: cuteBounce 0.9s infinite alternate cubic-bezier(0.35, 0, 0.25, 1);
+      filter: drop-shadow(0 8px 12px rgba(248, 164, 200, 0.4));
+    }
+
+    @keyframes cuteBounce {
+      0% { transform: translateY(0) scale(1, 1); }
+      100% { transform: translateY(-24px) scale(1.05, 0.95); }
+    }
+
+    .preloader-title {
+      font-family: var(--font-heading);
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .preloader-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+      font-weight: 600;
+    }
+
+    .rpg-progress-container {
+      background: #f1e7fc;
+      border: 2px solid #ffffff;
+      border-radius: 9999px;
+      height: 24px;
+      padding: 3px;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .rpg-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #f8a4c8 0%, #baa2f5 50%, #8ee2c9 100%);
+      border-radius: 9999px;
+      position: relative;
+      transition: width 0.15s ease-out;
+      box-shadow: 0 2px 8px rgba(248, 164, 200, 0.5);
+    }
+
+    .rpg-progress-bar::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.35),
+        rgba(255, 255, 255, 0.35) 10px,
+        transparent 10px,
+        transparent 20px
+      );
+      animation: stripeSlide 1.5s linear infinite;
+    }
+
+    @keyframes stripeSlide {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 0; }
+    }
+
+    .preloader-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-game);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .preloader-tip {
+      margin-top: 1.25rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      background: rgba(240, 230, 255, 0.6);
+      padding: 0.6rem 1rem;
+      border-radius: 16px;
+      display: inline-block;
+    }
+
+    /* ==========================================================================
+       NAVIGATION BAR (PILL SHAPE WITH GLASSMORPHISM)
+       ========================================================================== */
+    .nav-wrapper {
+      position: fixed;
+      top: 1.25rem;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+      padding: 0 1.25rem;
+      pointer-events: none;
+    }
+
+    .site-nav {
+      pointer-events: auto;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.95);
+      border-radius: 9999px;
+      padding: 0.6rem 1.35rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      box-shadow: 0 12px 35px rgba(186, 150, 230, 0.2);
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .site-nav:hover {
+      box-shadow: 0 16px 45px rgba(248, 164, 200, 0.32);
+      transform: translateY(-2px);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--text-main);
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-brand:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-avatar-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-lavender));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      box-shadow: 0 3px 8px rgba(248, 164, 200, 0.5);
+    }
+
+    .nav-lvl-badge {
+      font-family: var(--font-game);
+      font-size: 0.75rem;
+      background: #8ee2c9;
+      color: #1a5e4b;
+      padding: 0.15rem 0.55rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 9999px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-link:hover, .nav-link.active {
+      background: rgba(248, 164, 200, 0.25);
+      color: var(--text-main);
+      transform: translateY(-2px) scale(1.04);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-nav-control {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #f3e6fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: var(--text-main);
+      box-shadow: 0 3px 8px rgba(186, 148, 240, 0.15);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-nav-control:hover {
+      transform: scale(1.12) rotate(8deg);
+      border-color: var(--accent-pink);
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #f3e6fc;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--text-main);
+    }
+
+    .mobile-menu-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(248, 240, 252, 0.98);
+      backdrop-filter: blur(24px);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      transform: translateY(-100%);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .mobile-menu-drawer.open {
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .mobile-menu-drawer a {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .mobile-menu-drawer a:hover {
+      background: rgba(248, 164, 200, 0.3);
+      transform: scale(1.08);
+    }
+
+    .mobile-close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 28px;
+      background: #ffffff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* ==========================================================================
+       HERO SECTION (3D INTERACTIVE MASCOT)
+       ========================================================================== */
+    .hero-section {
+      min-height: 100vh;
+      padding: 7.5rem 2rem 4rem 2rem;
+      max-width: 1260px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-content {
+      flex: 1.1;
+      max-width: 620px;
+    }
+
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(255, 255, 255, 0.88);
+      border: 2px solid #ffffff;
+      padding: 0.45rem 1.25rem;
+      border-radius: 9999px;
+      font-family: var(--font-game);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      box-shadow: 0 6px 18px rgba(186, 150, 230, 0.18);
+      margin-bottom: 1.25rem;
+      animation: floatBadge 3s infinite ease-in-out;
+    }
+
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .hero-badge-status-dot {
+      width: 10px;
+      height: 10px;
+      background: #8ee2c9;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #8ee2c9;
+      animation: pulseDot 1.5s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    .hero-title-greeting {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-name {
+      font-family: var(--font-heading);
+      font-size: 4.4rem;
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 0.9rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ff7597 0%, #aa7cf0 55%, #66d4c0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 12px rgba(248, 164, 200, 0.3));
+    }
+
+    .hero-subtitle-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, rgba(248, 164, 200, 0.25), rgba(191, 163, 245, 0.25));
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 1.4rem;
+      animation: sparkleGlow 2.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes sparkleGlow {
+      0% { box-shadow: 0 4px 15px rgba(248, 164, 200, 0.2); }
+      100% { box-shadow: 0 6px 22px rgba(191, 163, 245, 0.4); }
+    }
+
+    .hero-bio {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 1.75rem;
+      font-weight: 600;
+    }
+
+    .rpg-stats-hud {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      border: 2px solid #ffffff;
+      border-radius: 24px;
+      padding: 1.1rem 1.4rem;
+      box-shadow: 0 10px 28px rgba(186, 150, 230, 0.14);
+      margin-bottom: 2rem;
+    }
+
+    .hud-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .hud-stat-label {
+      font-family: var(--font-game);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .hud-stat-val {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .hero-buttons-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-game-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      background: linear-gradient(180deg, #ff9eb5 0%, #f8a4c8 100%);
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 0.95rem 2rem;
+      border-radius: 9999px;
+      border: 2px solid #ffffff;
+      box-shadow: var(--shadow-btn), 0 10px 25px rgba(248, 164, 200, 0.4);
+      transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .btn-game-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 9px 0 #e88ea8, 0 14px 30px rgba(248, 164, 200, 0.55);
+    }
+
+    .btn-game-primary:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #e88ea8, 0 4px 12px rgba(248, 164, 200, 0.4);
+    }
+
+    .btn-game-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      background: #ffffff;
+      color: var(--text-main);
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 0.95rem 1.85rem;
+      border-radius: 9999px;
+      border: 2px solid #f3e6fc;
+      box-shadow: 0 6px 0 #e5daf3, 0 8px 20px rgba(186, 150, 230, 0.15);
+      transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .btn-game-secondary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 9px 0 #e5daf3, 0 12px 25px rgba(186, 150, 230, 0.25);
+      border-color: var(--accent-lavender);
+    }
+
+    .btn-game-secondary:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #e5daf3;
+    }
+
+    /* 3D Mascot Stage */
+    .hero-stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .mascot-stage-card {
+      width: 100%;
+      max-width: 480px;
+      height: 480px;
+      background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.95) 0%, rgba(246, 238, 255, 0.7) 70%);
+      border: 4px solid #ffffff;
+      border-radius: 48px;
+      box-shadow: 0 25px 60px rgba(186, 148, 240, 0.28), inset 0 0 35px rgba(255, 255, 255, 0.85);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #mascot-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+
+    #mascot-canvas:active {
+      cursor: grabbing;
+    }
+
+    .mascot-speech-bubble {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: #ffffff;
+      border: 2px solid #f3e6fc;
+      border-radius: 20px;
+      padding: 0.65rem 1.15rem;
+      font-family: var(--font-game);
+      font-size: 0.88rem;
+      color: var(--text-main);
+      box-shadow: 0 8px 24px rgba(186, 150, 230, 0.22);
+      max-width: 220px;
+      z-index: 20;
+      animation: bubbleFloat 3s infinite ease-in-out;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .mascot-speech-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 30px;
+      border-width: 10px 10px 0;
+      border-style: solid;
+      border-color: #ffffff transparent;
+      display: block;
+      width: 0;
+    }
+
+    @keyframes bubbleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .mascot-controls-tray {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px solid #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px rgba(186, 150, 230, 0.15);
+    }
+
+    .mascot-control-label {
+      font-family: var(--font-game);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-right: 0.35rem;
+    }
+
+    .mascot-skin-pill {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .mascot-skin-pill:hover {
+      transform: scale(1.3);
+    }
+
+    .btn-mascot-spin {
+      font-family: var(--font-game);
+      font-size: 0.8rem;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-lavender));
+      color: #ffffff;
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(248, 164, 200, 0.4);
+      margin-left: 0.35rem;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-mascot-spin:hover {
+      transform: scale(1.08);
+    }
+
+    .hero-scroll-anchor {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-game);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      animation: floatIndicator 2.2s infinite ease-in-out;
+      cursor: pointer;
+    }
+
+    @keyframes floatIndicator {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 8px); }
+    }
+
+    .scroll-cloud-pill {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1.5px solid #ffffff;
+      padding: 0.4rem 1.15rem;
+      border-radius: 9999px;
+      box-shadow: 0 4px 14px rgba(186, 150, 230, 0.18);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ==========================================================================
+       SECTION COMMON LAYOUT (FLOATING ISLANDS)
+       ========================================================================== */
+    .section-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6.5rem 1.75rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .section-island-header {
+      text-align: center;
+      max-width: 740px;
+      margin: 0 auto 3.5rem auto;
+    }
+
+    .section-tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #ffffff;
+      padding: 0.35rem 1.15rem;
+      border-radius: 9999px;
+      font-family: var(--font-game);
+      font-size: 0.88rem;
+      color: var(--accent-pink-hover);
+      box-shadow: 0 4px 14px rgba(248, 164, 200, 0.25);
+      margin-bottom: 0.85rem;
+    }
+
+    .section-island-title {
+      font-family: var(--font-heading);
+      font-size: 2.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-island-desc {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      line-height: 1.7;
+    }
+
+    /* ==========================================================================
+       01. ABOUT SECTION (CHARACTER INFO CARD & STATS)
+       ========================================================================== */
+    .rpg-character-window {
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 3px solid var(--card-border);
+      border-radius: 36px;
+      padding: 3rem;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 3.5rem;
+      position: relative;
+    }
+
+    .rpg-character-window::before {
+      content: "KARAKTER BİLGİ KARTI • SEVİYE 1";
+      position: absolute;
+      top: -14px;
+      left: 40px;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-lavender));
+      color: #ffffff;
+      font-family: var(--font-game);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 1rem;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 12px rgba(248, 164, 200, 0.35);
+    }
+
+    .character-portrait-box {
+      background: linear-gradient(135deg, #ffffff 0%, #f6effc 100%);
+      border: 2px solid #ffffff;
+      border-radius: 28px;
+      padding: 2.25rem 1.75rem;
+      text-align: center;
+      box-shadow: 0 10px 28px rgba(186, 150, 230, 0.16);
+      position: relative;
+    }
+
+    .portrait-avatar-wrapper {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 1.5rem auto;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffd3e0 0%, #d8c2fc 50%, #b2ebd9 100%);
+      border: 4px solid #ffffff;
+      box-shadow: 0 10px 24px rgba(248, 164, 200, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      animation: avatarGlow 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes avatarGlow {
+      0% { box-shadow: 0 10px 24px rgba(248, 164, 200, 0.3); }
+      100% { box-shadow: 0 15px 35px rgba(191, 163, 245, 0.5); }
+    }
+
+    .character-name-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .character-role-tag {
+      font-family: var(--font-game);
+      font-size: 0.98rem;
+      color: var(--accent-pink-hover);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .character-traits-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .trait-badge {
+      background: #f4ecfc;
+      color: var(--text-secondary);
+      font-family: var(--font-game);
+      font-size: 0.82rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+
+    .character-spec-list {
+      border-top: 1.5px dashed #e8d8f8;
+      padding-top: 1.25rem;
+      text-align: left;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .spec-item strong {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .character-lore-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .character-story-p {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+    }
+
+    .character-story-p strong {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .rpg-stats-container {
+      margin-top: 1.5rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #ffffff;
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(186, 150, 230, 0.12);
+    }
+
+    .stat-bar-group {
+      margin-bottom: 1.1rem;
+    }
+
+    .stat-bar-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .stat-bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-bar-val {
+      font-family: var(--font-game);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+
+    .stat-track {
+      height: 16px;
+      background: #f1e7fc;
+      border-radius: 9999px;
+      border: 1.5px solid #ffffff;
+      overflow: hidden;
+      padding: 2px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .stat-fill {
+      height: 100%;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #ff9eb5 0%, #bfa3f5 50%, #8ee2c9 100%);
+      transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    .stat-fill::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, transparent 60%);
+    }
+
+    .equipped-gear-shelf {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .gear-label {
+      font-family: var(--font-game);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .gear-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      border: 1.5px solid #f0e2fc;
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      box-shadow: 0 4px 10px rgba(186, 150, 230, 0.1);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .gear-badge:hover {
+      transform: translateY(-2px) scale(1.05);
+      border-color: var(--accent-pink);
+    }
+
+    /* ==========================================================================
+       02. SKILLS SECTION (POWER-UPS & ABILITIES)
+       ========================================================================== */
+    .skills-powerups-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .powerup-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 3px solid var(--card-border);
+      border-radius: 32px;
+      padding: 2.25rem 1.85rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .powerup-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-hover);
+      border-color: #ffffff;
+    }
+
+    .powerup-rarity-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.85rem;
+      border-radius: 9999px;
+      font-family: var(--font-game);
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      background: #ffffff;
+      border: 1.5px solid #f3e6fc;
+      box-shadow: 0 3px 8px rgba(186, 150, 230, 0.12);
+    }
+
+    .powerup-icon-sphere {
+      width: 72px;
+      height: 72px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ffffff 0%, #f6eefe 100%);
+      border: 2px solid #ffffff;
+      box-shadow: 0 8px 20px rgba(186, 150, 230, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin-bottom: 1.25rem;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .powerup-card:hover .powerup-icon-sphere {
+      transform: scale(1.15) rotate(6deg);
+    }
+
+    .powerup-name {
+      font-family: var(--font-heading);
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .powerup-stars {
+      color: #ffb703;
+      font-size: 1.15rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.85rem;
+    }
+
+    .powerup-desc {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .powerup-xp-wrap {
+      background: #ffffff;
+      border: 1.5px solid #f0e4fc;
+      border-radius: 20px;
+      padding: 0.85rem 1rem;
+    }
+
+    .powerup-xp-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-game);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .powerup-xp-bar {
+      height: 12px;
+      background: #f1e7fc;
+      border-radius: 9999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .powerup-xp-fill {
+      height: 100%;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-lavender));
+      transition: width 1.5s ease-out;
+    }
+
+    .passive-items-bag {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      border: 3px solid #ffffff;
+      border-radius: 32px;
+      padding: 2.25rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .passive-items-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .passive-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .passive-badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .passive-item-pill {
+      background: #ffffff;
+      border: 2px solid #f3e6fc;
+      border-radius: 20px;
+      padding: 0.85rem 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      box-shadow: 0 4px 12px rgba(186, 150, 230, 0.1);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .passive-item-pill:hover {
+      transform: translateY(-4px) scale(1.03);
+      border-color: var(--accent-pink);
+      box-shadow: 0 8px 20px rgba(248, 164, 200, 0.25);
+    }
+
+    .passive-item-emoji {
+      font-size: 22px;
+    }
+
+    /* ==========================================================================
+       03. EXPERIENCE SECTION (QUEST LOG)
+       ========================================================================== */
+    .quest-log-parchment {
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 3px solid var(--card-border);
+      border-radius: 36px;
+      padding: 3rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+
+    .quest-log-parchment::before {
+      content: "GÖREV TAMAMLANDI! ✅";
+      position: absolute;
+      top: -15px;
+      left: 40px;
+      background: linear-gradient(90deg, #8ee2c9, #72d9b8);
+      color: #124d3d;
+      font-family: var(--font-game);
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.35rem 1.35rem;
+      border-radius: 9999px;
+      box-shadow: 0 4px 14px rgba(142, 226, 201, 0.45);
+      letter-spacing: 0.04em;
+    }
+
+    .quest-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      border-bottom: 2px dashed #e8d8f8;
+      padding-bottom: 1.75rem;
+    }
+
+    .quest-role-title {
+      font-family: var(--font-heading);
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .quest-guild-name {
+      font-family: var(--font-game);
+      font-size: 1.15rem;
+      color: var(--accent-pink-hover);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quest-rewards-badge {
+      background: #ffffff;
+      border: 2px solid #ffd4a8;
+      border-radius: 20px;
+      padding: 0.75rem 1.25rem;
+      text-align: right;
+      box-shadow: 0 6px 16px rgba(255, 212, 168, 0.35);
+    }
+
+    .quest-reward-val {
+      font-family: var(--font-game);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #e67e22;
+    }
+
+    .quest-meta-chips {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+
+    .quest-meta-chip {
+      background: #ffffff;
+      border: 1.5px solid #f0e4fc;
+      border-radius: 9999px;
+      padding: 0.45rem 1.1rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .quest-objectives-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .quest-objective-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .quest-check-bubble {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #8ee2c9;
+      color: #124d3d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      box-shadow: 0 3px 8px rgba(142, 226, 201, 0.4);
+    }
+
+    .quest-loot-footer {
+      background: rgba(255, 255, 255, 0.75);
+      border: 2px solid #ffffff;
+      border-radius: 24px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .quest-loot-label {
+      font-family: var(--font-game);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quest-loot-pills {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .loot-pill {
+      background: #ffffff;
+      border: 1.5px solid #f0e2fc;
+      border-radius: 9999px;
+      padding: 0.35rem 0.85rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       04. EDUCATION SECTION (ACADEMY TRAINING & PROGRESS RING)
+       ========================================================================== */
+    .academy-card-wrap {
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 3px solid var(--card-border);
+      border-radius: 36px;
+      padding: 3rem;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+    }
+
+    .academy-card-wrap::before {
+      content: "EĞİTİM AKADEMİSİ KAYDI 🏛️";
+      position: absolute;
+      top: -14px;
+      left: 40px;
+      background: linear-gradient(90deg, #baa2f5, #9b7de8);
+      color: #ffffff;
+      font-family: var(--font-game);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.3rem 1.2rem;
+      border-radius: 9999px;
+      box-shadow: 0 4px 14px rgba(186, 162, 245, 0.4);
+    }
+
+    .academy-inst-title {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .academy-major-title {
+      font-family: var(--font-game);
+      font-size: 1.25rem;
+      color: var(--accent-pink-hover);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .academy-desc-p {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .academy-dates-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #ffffff;
+      border: 1.5px solid #f0e2fc;
+      border-radius: 9999px;
+      padding: 0.45rem 1.15rem;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      box-shadow: 0 4px 12px rgba(186, 150, 230, 0.12);
+    }
+
+    /* Circular Progress Ring */
+    .progress-ring-container {
+      background: linear-gradient(135deg, #ffffff 0%, #f7effe 100%);
+      border: 3px solid #ffffff;
+      border-radius: 32px;
+      padding: 2.25rem;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(186, 150, 230, 0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .ring-svg-wrap {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin-bottom: 1.25rem;
+    }
+
+    .ring-svg {
+      transform: rotate(-90deg);
+    }
+
+    .ring-center-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ring-percent {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.85rem;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .ring-label {
+      font-family: var(--font-game);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .ring-sub-status {
+      font-family: var(--font-game);
+      font-size: 0.92rem;
+      color: #27ae60;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       05. CERTIFICATIONS SECTION (ACHIEVEMENT UNLOCKED POPUP)
+       ========================================================================== */
+    .achievement-popup-box {
+      background: radial-gradient(circle at 50% 30%, #fffdfa 0%, #fff7eb 100%);
+      border: 4px solid #ffd4a8;
+      border-radius: 36px;
+      padding: 3.5rem;
+      box-shadow: 0 25px 60px rgba(255, 187, 0, 0.2), inset 0 0 30px rgba(255, 234, 167, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .achievement-banner-top {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #ffb800, #ff8c00);
+      color: #ffffff;
+      font-family: var(--font-game);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.4rem 2rem;
+      border-radius: 9999px;
+      box-shadow: 0 6px 18px rgba(255, 140, 0, 0.45);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .achievement-trophy-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .golden-trophy-orb {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff1b8 0%, #ffd043 70%, #f39c12 100%);
+      border: 4px solid #ffffff;
+      box-shadow: 0 15px 35px rgba(255, 187, 0, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      animation: trophyShine 2.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes trophyShine {
+      0% { transform: scale(1) rotate(-3deg); filter: drop-shadow(0 0 15px #ffd4a8); }
+      100% { transform: scale(1.08) rotate(3deg); filter: drop-shadow(0 0 25px #ffb800); }
+    }
+
+    .trophy-rarity-pill {
+      margin-top: 1rem;
+      background: #ffffff;
+      border: 1.5px solid #ffeaa7;
+      border-radius: 9999px;
+      padding: 0.35rem 1rem;
+      font-family: var(--font-game);
+      font-size: 0.82rem;
+      color: #d97706;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .achievement-content-col {
+      flex: 1;
+    }
+
+    .achievement-main-title {
+      font-family: var(--font-heading);
+      font-size: 2.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .achievement-verified-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-game);
+      font-size: 1rem;
+      color: #d97706;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .achievement-desc-p {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .achievement-tags-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .achieve-tag {
+      background: #ffffff;
+      border: 1.5px solid #ffeaa7;
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       06. MAGIC LABORATORY & SPELL CASTING (INTERACTIVE)
+       ========================================================================== */
+    .magic-lab-panel {
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 3px solid var(--card-border);
+      border-radius: 36px;
+      padding: 3rem;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .magic-spells-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1.75rem;
+    }
+
+    .btn-spell-cast {
+      background: #ffffff;
+      border: 2px solid #f0e2fc;
+      border-radius: 20px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text-main);
+      box-shadow: 0 6px 14px rgba(186, 150, 230, 0.12);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .btn-spell-cast:hover {
+      transform: translateY(-4px) scale(1.04);
+      border-color: var(--accent-pink);
+      box-shadow: 0 10px 22px rgba(248, 164, 200, 0.35);
+    }
+
+    .btn-spell-cast:active {
+      transform: translateY(2px);
+    }
+
+    .code-scroll-box {
+      background: #2a1b42;
+      border: 3px solid #ffffff;
+      border-radius: 28px;
+      padding: 1.75rem;
+      box-shadow: 0 15px 35px rgba(45, 27, 78, 0.25);
+      color: #f7e6ff;
+      font-family: monospace;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-scroll-box::before {
+      content: "BUYU_KODU.JS";
+      position: absolute;
+      top: 12px;
+      right: 20px;
+      font-family: var(--font-game);
+      font-size: 0.72rem;
+      color: #baa2f5;
+      letter-spacing: 0.08em;
+    }
+
+    .code-kw { color: #f8a4c8; font-weight: bold; }
+    .code-fn { color: #8ee2c9; }
+    .code-str { color: #ffeaa7; }
+    .code-comment { color: #9c89b8; font-style: italic; }
+
+    /* ==========================================================================
+       07. CONTACT SECTION (IN-GAME MAILBOX & ENVELOPE)
+       ========================================================================== */
+    .contact-mailbox-window {
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 3px solid var(--card-border);
+      border-radius: 36px;
+      padding: 3.5rem;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      position: relative;
+    }
+
+    .mailbox-info-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mailbox-heading {
+      font-family: var(--font-heading);
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+
+    .mailbox-desc {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    /* Cute Interactive Envelope Graphic */
+    .envelope-visual-card {
+      background: #ffffff;
+      border: 3px solid #f3e6fc;
+      border-radius: 28px;
+      padding: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      box-shadow: 0 10px 25px rgba(186, 150, 230, 0.15);
+      margin-bottom: 1.75rem;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .envelope-visual-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: var(--accent-pink);
+    }
+
+    .envelope-svg-icon {
+      font-size: 52px;
+      animation: cuteBounce 1.5s infinite alternate ease-in-out;
+    }
+
+    .mailbox-cards-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .dispatch-item-card {
+      background: #ffffff;
+      border: 2px solid #f3e6fc;
+      border-radius: 24px;
+      padding: 1.15rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 20px rgba(186, 150, 230, 0.12);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .dispatch-item-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-pink);
+      box-shadow: 0 12px 28px rgba(248, 164, 200, 0.25);
+    }
+
+    .dispatch-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: #f7eefc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .dispatch-meta-wrap {
+      flex: 1;
+      margin-left: 1.1rem;
+    }
+
+    .dispatch-meta-label {
+      font-family: var(--font-game);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dispatch-meta-val {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text-main);
+    }
+
+    .btn-copy-address {
+      background: #f8ecfc;
+      color: var(--text-main);
+      border: 1.5px solid #e8d2fc;
+      border-radius: 9999px;
+      padding: 0.45rem 1rem;
+      font-family: var(--font-game);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-copy-address:hover {
+      background: var(--accent-pink);
+      color: #ffffff;
+      transform: scale(1.06);
+    }
+
+    .server-status-pill {
+      margin-top: 1.5rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1.5px solid #ffffff;
+      border-radius: 20px;
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-game);
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .live-clock-badge {
+      font-family: monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent-pink-hover);
+      background: #ffffff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
+    }
+
+    /* Flying Letter Form */
+    .flying-letter-form {
+      background: #ffffff;
+      border: 3px solid #f3e6fc;
+      border-radius: 28px;
+      padding: 2.25rem;
+      box-shadow: 0 15px 35px rgba(186, 150, 230, 0.16);
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .form-group-label {
+      font-family: var(--font-game);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .game-input {
+      width: 100%;
+      background: #fbf7fe;
+      border: 2px solid #eddffc;
+      border-radius: 18px;
+      padding: 0.9rem 1.25rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-main);
+      font-weight: 600;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .game-input:focus {
+      border-color: var(--accent-pink);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(248, 164, 200, 0.2);
+    }
+
+    .game-textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .toast-alert {
+      padding: 0.85rem 1.25rem;
+      border-radius: 16px;
+      font-family: var(--font-game);
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: none;
+      text-align: center;
+      animation: bubbleFloat 2s infinite ease-in-out;
+    }
+
+    .toast-success {
+      background: #e6f9f2;
+      color: #1a6b53;
+      border: 2px solid #8ee2c9;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .site-footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 10;
+      border-top: 2px dashed rgba(200, 180, 230, 0.4);
+    }
+
+    .footer-left-info {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-pixel-heart {
+      color: #ff5277;
+      display: inline-block;
+      animation: cuteBounce 0.8s infinite alternate ease-in-out;
+    }
+
+    .footer-links-list {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .footer-links-list a:hover {
+      color: var(--accent-pink);
+      transform: translateY(-2px);
+    }
+
+    .btn-return-top {
+      background: #ffffff;
+      border: 2px solid #f0e2fc;
+      border-radius: 9999px;
+      padding: 0.55rem 1.25rem;
+      font-family: var(--font-game);
+      font-size: 0.88rem;
+      color: var(--text-main);
+      box-shadow: 0 4px 12px rgba(186, 150, 230, 0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-return-top:hover {
+      transform: translateY(-3px) scale(1.05);
+      border-color: var(--accent-pink);
+      box-shadow: 0 8px 20px rgba(248, 164, 200, 0.3);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-section {
+        flex-direction: column-reverse;
+        padding-top: 7rem;
+        text-align: center;
+      }
+      .hero-content {
+        max-width: 100%;
+      }
+      .hero-buttons-row {
+        justify-content: center;
+      }
+      .rpg-character-window {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 2.25rem;
+      }
+      .skills-powerups-grid {
+        grid-template-columns: 1fr;
+      }
+      .academy-card-wrap {
+        grid-template-columns: 1fr;
+      }
+      .achievement-popup-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 2.5rem 1.75rem;
+      }
+      .achievement-verified-meta, .achievement-tags-row {
+        justify-content: center;
+      }
+      .magic-lab-panel {
+        grid-template-columns: 1fr;
+      }
+      .contact-mailbox-window {
+        grid-template-columns: 1fr;
+        padding: 2.25rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-controls .btn-palette-toggle {
+        display: none;
+      }
+      .mobile-nav-toggle {
+        display: flex;
+      }
+      .hero-name {
+        font-size: 3rem;
+      }
+      .rpg-stats-hud {
+        grid-template-columns: 1fr;
+      }
+      .section-island-title {
+        font-size: 2.2rem;
+      }
+      .mascot-stage-card {
+        height: 380px;
+        max-width: 380px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       CUSTOM CURSOR (DESKTOP)
+       ========================================================================== -->
+  <div class="custom-cursor" id="custom-cursor" aria-hidden="true">
+    <div class="custom-cursor-star">✨</div>
+  </div>
+
+  <!-- ==========================================================================
+       BACKGROUND FLOATING CLOUDS & STARS
+       ========================================================================== -->
+  <div class="sky-decorations" aria-hidden="true">
+    <svg class="cloud cloud-1" viewBox="0 0 100 45" fill="#ffffff">
+      <path d="M20 35 A15 15 0 0 1 35 15 A20 20 0 0 1 70 18 A16 16 0 0 1 85 35 Z" />
+    </svg>
+    <svg class="cloud cloud-2" viewBox="0 0 100 45" fill="#fdf4ff">
+      <path d="M15 35 A15 15 0 0 1 35 12 A22 22 0 0 1 75 16 A16 16 0 0 1 90 35 Z" />
+    </svg>
+    <svg class="cloud cloud-3" viewBox="0 0 100 45" fill="#f4faf8">
+      <path d="M20 35 A15 15 0 0 1 40 14 A18 18 0 0 1 68 15 A15 15 0 0 1 85 35 Z" />
+    </svg>
+    <svg class="cloud cloud-4" viewBox="0 0 100 45" fill="#fcf6eb">
+      <path d="M18 35 A14 14 0 0 1 35 15 A20 20 0 0 1 72 17 A16 16 0 0 1 88 35 Z" />
+    </svg>
+
+    <div class="star-twinkle" style="top: 12%; left: 15%; font-size: 14px;">✦</div>
+    <div class="star-twinkle" style="top: 22%; left: 85%; font-size: 18px; animation-delay: 1.2s;">★</div>
+    <div class="star-twinkle" style="top: 45%; left: 8%; font-size: 16px; animation-delay: 0.8s;">✦</div>
+    <div class="star-twinkle" style="top: 60%; left: 92%; font-size: 15px; animation-delay: 2.1s;">★</div>
+    <div class="star-twinkle" style="top: 75%; left: 20%; font-size: 17px; animation-delay: 1.5s;">✦</div>
+    <div class="star-twinkle" style="top: 88%; left: 78%; font-size: 14px; animation-delay: 0.4s;">★</div>
+  </div>
+
+  <!-- ==========================================================================
+       PRELOADER (RPG LOADING SCREEN)
+       ========================================================================== -->
+  <div id="preloader">
+    <div class="preloader-card">
+      <div class="preloader-mascot-bounce">🌸</div>
+      <h2 class="preloader-title">Macera Yükleniyor...</h2>
+      <p class="preloader-subtitle" id="preloader-status-msg">Pastel bulutlar oluşturuluyor...</p>
+
+      <div class="rpg-progress-container">
+        <div class="rpg-progress-bar" id="preloader-progress-bar"></div>
+      </div>
+
+      <div class="preloader-status">
+        <span>SEVİYE 1 KAŞİF</span>
+        <span id="preloader-num">0%</span>
+      </div>
+
+      <div class="preloader-tip">
+        ✨ <strong>İpucu:</strong> Puffi maskotu ile etkileşime geçebilirsin!
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== -->
+  <div class="nav-wrapper">
+    <nav class="site-nav" id="site-nav">
+      <a href="#hero" class="nav-brand" aria-label="İdil Yücel Ana Sayfa">
+        <div class="nav-avatar-icon">🌸</div>
+        <span>İDİL YÜCEL</span>
+        <span class="nav-lvl-badge">SEVİYE 1</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link"><span>👤</span> Hakkımda</a></li>
+        <li><a href="#skills" class="nav-link"><span>⚡</span> Yetenekler</a></li>
+        <li><a href="#experience" class="nav-link"><span>📜</span> Görev Günlüğü</a></li>
+        <li><a href="#education" class="nav-link"><span>🎓</span> Eğitim</a></li>
+        <li><a href="#certifications" class="nav-link"><span>🏆</span> Başarılar</a></li>
+        <li><a href="#magic-lab" class="nav-link"><span>🔮</span> Büyü Lab</a></li>
+        <li><a href="#contact" class="nav-link"><span>💌</span> İletişim</a></li>
+      </ul>
+
+      <div class="nav-controls">
+        <button class="btn-nav-control btn-palette-toggle" id="btn-theme-cycle" title="Temayı Değiştir" aria-label="Pastel Temayı Değiştir">
+          🎨
+        </button>
+
+        <button class="btn-nav-control" id="btn-sound-toggle" title="Sesi Aç/Kapat" aria-label="Sesi Aç/Kapat">
+          <span id="sound-icon">🔊</span>
+        </button>
+
+        <button class="mobile-nav-toggle" id="mobile-menu-btn" aria-label="Menüyü Aç">
+          ☰
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-menu-drawer" id="mobile-drawer">
+    <button class="mobile-close-btn" id="mobile-close-btn" aria-label="Menüyü Kapat">✕</button>
+    <a href="#hero" class="mobile-nav-link"><span>🌟</span> Ana Sayfa</a>
+    <a href="#about" class="mobile-nav-link"><span>👤</span> Hakkımda</a>
+    <a href="#skills" class="mobile-nav-link"><span>⚡</span> Yetenekler</a>
+    <a href="#experience" class="mobile-nav-link"><span>📜</span> Görev Günlüğü</a>
+    <a href="#education" class="mobile-nav-link"><span>🎓</span> Eğitim</a>
+    <a href="#certifications" class="mobile-nav-link"><span>🏆</span> Başarılar</a>
+    <a href="#magic-lab" class="mobile-nav-link"><span>🔮</span> Büyü Lab</a>
+    <a href="#contact" class="mobile-nav-link"><span>💌</span> İletişim</a>
+  </div>
+
+  <!-- ==========================================================================
+       MAIN CONTENT WRAPPER
+       ========================================================================== -->
+  <main>
+    <!-- ==========================================================================
+         HERO SECTION (3D INTERACTIVE MASCOT + INTRO)
+         ========================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="hero-content">
+        <div class="hero-badge-pill">
+          <span class="hero-badge-status-dot"></span>
+          <span>🎮 Seviye 1 Geliştirici • Türkiye</span>
+        </div>
+
+        <div class="hero-title-greeting">Merhaba Dünya!</div>
+        <h1 class="hero-name">İdil Yücel</h1>
+
+        <div class="hero-subtitle-box">
+          <span>Frontend Developer</span>
+          <span>✨</span>
+        </div>
+
+        <p class="hero-bio">Modern web teknolojileri ile yaratıcı ve etkileşimli arayüzler geliştiriyorum.</p>
+
+        <!-- RPG Quick Stats HUD -->
+        <div class="rpg-stats-hud">
+          <div class="hud-stat-item">
+            <span class="hud-stat-label">Sınıf</span>
+            <span class="hud-stat-val">Frontend Simyacı 🪄</span>
+          </div>
+          <div class="hud-stat-item">
+            <span class="hud-stat-label">Enerji</span>
+            <span class="hud-stat-val">100 / 100 💖</span>
+          </div>
+          <div class="hud-stat-item">
+            <span class="hud-stat-label">Durum</span>
+            <span class="hud-stat-val">İşe Hazır 🌟</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="hero-buttons-row">
+          <a href="#experience" class="btn-game-primary" id="hero-btn-quests">
+            <span>📜</span> Görev Günlüğü
+          </a>
+          <a href="#contact" class="btn-game-secondary" id="hero-btn-contact">
+            <span>💌</span> Mesaj Gönder
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: 3D Mascot Stage -->
+      <div class="hero-stage">
+        <div class="mascot-stage-card" id="mascot-stage-box">
+          <!-- Floating Dialogue Bubble -->
+          <div class="mascot-speech-bubble" id="mascot-bubble">
+            Merhaba! Ben Puffi! Bana tıkla! ✨
+          </div>
+
+          <!-- WebGL Three.js Canvas -->
+          <canvas id="mascot-canvas"></canvas>
+        </div>
+
+        <!-- Mascot Controls Tray -->
+        <div class="mascot-controls-tray">
+          <span class="mascot-control-label">Renk:</span>
+          <div class="mascot-skin-pill" style="background: #ffb8d2;" data-skin="0xffb8d2" title="Kiraz Çiçeği"></div>
+          <div class="mascot-skin-pill" style="background: #c8a8ff;" data-skin="0xc8a8ff" title="Leylak Düşü"></div>
+          <div class="mascot-skin-pill" style="background: #8ce2c8;" data-skin="0x8ce2c8" title="Nane Esintisi"></div>
+          <div class="mascot-skin-pill" style="background: #ffd3a8;" data-skin="0xffd3a8" title="Tatlı Şeftali"></div>
+          <button class="btn-mascot-spin" id="btn-spin-mascot">💫 Döndür!</button>
+        </div>
+      </div>
+
+      <!-- Animated Scroll Down Indicator -->
+      <a href="#about" class="hero-scroll-anchor" aria-label="Hakkımda Bölümüne İn">
+        <div class="scroll-cloud-pill">
+          <span>☁️</span>
+          <span>Keşfet</span>
+          <span>↓</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- ==========================================================================
+         01. ABOUT SECTION (CHARACTER INFO CARD & STATS)
+         ========================================================================== -->
+    <section class="section-wrap" id="about">
+      <div class="section-island-header">
+        <div class="section-tag-badge">
+          <span>✨</span> 01 / KARAKTERİM
+        </div>
+        <h2 class="section-island-title">Beni Tanıyın</h2>
+      </div>
+
+      <div class="rpg-character-window">
+        <div class="character-portrait-box">
+          <div class="portrait-avatar-wrapper">
+            <span>🌸</span>
+          </div>
+          <h3 class="character-name-title">İdil Yücel</h3>
+          <div class="character-role-tag">Frontend Yazılım Geliştirici</div>
+
+          <div class="character-traits-grid">
+            <span class="trait-badge">⚡ Hızlı Öğrenen</span>
+            <span class="trait-badge">🎨 Detaycı</span>
+            <span class="trait-badge">🤖 GenAI Sertifikalı</span>
+            <span class="trait-badge">☕ Çay &amp; Kod</span>
+          </div>
+
+          <div class="character-spec-list">
+            <div class="spec-item">
+              <span>Konum:</span>
+              <strong>Eskişehir, Türkiye 📍</strong>
+            </div>
+            <div class="spec-item">
+              <span>Kurum:</span>
+              <strong>Anadolu Üniversitesi BAUM</strong>
+            </div>
+            <div class="spec-item">
+              <span>Karakter:</span>
+              <strong>Yaratıcı ✨</strong>
+            </div>
+            <div class="spec-item">
+              <span>Durum:</span>
+              <strong style="color: #27ae60;">Aktif Kaşif 🟢</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="character-lore-wrap">
+          <div>
+            <p class="character-story-p">
+              Türkiye'de yaşayan bir Frontend Developer'ım. Anadolu Üniversitesi'nde Ön Yüz Yazılım Geliştirme okuyorum. BAUM'da staj deneyimim var. HTML5, JavaScript ve SQL ile modern web arayüzleri geliştiriyorum.
+            </p>
+          </div>
+
+          <!-- RPG Attribute Stats -->
+          <div class="rpg-stats-container">
+            <div class="stat-bar-group">
+              <div class="stat-bar-header">
+                <span>🌐 HTML5</span>
+                <span class="stat-bar-val">95 / 100 [MAX]</span>
+              </div>
+              <div class="stat-track">
+                <div class="stat-fill" style="width: 95%;"></div>
+              </div>
+            </div>
+
+            <div class="stat-bar-group">
+              <div class="stat-bar-header">
+                <span>⚡ JavaScript</span>
+                <span class="stat-bar-val">90 / 100 [90]</span>
+              </div>
+              <div class="stat-track">
+                <div class="stat-fill" style="width: 90%;"></div>
+              </div>
+            </div>
+
+            <div class="stat-bar-group">
+              <div class="stat-bar-header">
+                <span>💎 SQL</span>
+                <span class="stat-bar-val">85 / 100 [85]</span>
+              </div>
+              <div class="stat-track">
+                <div class="stat-fill" style="width: 85%;"></div>
+              </div>
+            </div>
+
+            <div class="stat-bar-group">
+              <div class="stat-bar-header">
+                <span>🤖 Yapay Zeka</span>
+                <span class="stat-bar-val">92 / 100 [SERTİFİKALI]</span>
+              </div>
+              <div class="stat-track">
+                <div class="stat-fill" style="width: 92%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="equipped-gear-shelf">
+            <span class="gear-label">Ekipmanlar:</span>
+            <span class="gear-badge">💻 VS Code</span>
+            <span class="gear-badge">🪐 Three.js 3D</span>
+            <span class="gear-badge">🚀 GSAP</span>
+            <span class="gear-badge">🔮 AI Asistanı</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         02. SKILLS SECTION (POWER-UPS & ABILITIES)
+         ========================================================================== -->
+    <section class="section-wrap" id="skills">
+      <div class="section-island-header">
+        <div class="section-tag-badge">
+          <span>⚡</span> 02 / YETENEK AĞACI
+        </div>
+        <h2 class="section-island-title">Yeteneklerim</h2>
+      </div>
+
+      <!-- Top 3 Primary Skills (Power-Up Cards) -->
+      <div class="skills-powerups-grid">
+        <!-- Power-Up 1: HTML5 -->
+        <div class="powerup-card" data-tilt>
+          <div>
+            <div class="powerup-rarity-pill">
+              <span>⭐</span> ANA YETENEK #1
+            </div>
+            <div class="powerup-icon-sphere">🌐</div>
+            <h3 class="powerup-name">HTML5</h3>
+            <div class="powerup-stars">⭐⭐⭐⭐⭐</div>
+            <p class="powerup-desc">Semantik web yapısı, erişilebilirlik ve modern DOM mimarisi.</p>
+          </div>
+          <div class="powerup-xp-wrap">
+            <div class="powerup-xp-meta">
+              <span>Yeterlilik</span>
+              <span>95% XP</span>
+            </div>
+            <div class="powerup-xp-bar">
+              <div class="powerup-xp-fill" style="width: 95%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Power-Up 2: JavaScript -->
+        <div class="powerup-card" data-tilt>
+          <div>
+            <div class="powerup-rarity-pill">
+              <span>⭐</span> ANA YETENEK #2
+            </div>
+            <div class="powerup-icon-sphere">🪄</div>
+            <h3 class="powerup-name">JavaScript</h3>
+            <div class="powerup-stars">⭐⭐⭐⭐☆</div>
+            <p class="powerup-desc">ES6+ sözdizimi, asenkron programlama ve DOM yönetimi.</p>
+          </div>
+          <div class="powerup-xp-wrap">
+            <div class="powerup-xp-meta">
+              <span>Yeterlilik</span>
+              <span>90% XP</span>
+            </div>
+            <div class="powerup-xp-bar">
+              <div class="powerup-xp-fill" style="width: 90%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Power-Up 3: SQL -->
+        <div class="powerup-card" data-tilt>
+          <div>
+            <div class="powerup-rarity-pill">
+              <span>⭐</span> ANA YETENEK #3
+            </div>
+            <div class="powerup-icon-sphere">💎</div>
+            <h3 class="powerup-name">SQL</h3>
+            <div class="powerup-stars">⭐⭐⭐⭐☆</div>
+            <p class="powerup-desc">İlişkisel veri tabanı tasarımı ve sorgu optimizasyonu.</p>
+          </div>
+          <div class="powerup-xp-wrap">
+            <div class="powerup-xp-meta">
+              <span>Yeterlilik</span>
+              <span>85% XP</span>
+            </div>
+            <div class="powerup-xp-bar">
+              <div class="powerup-xp-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Passive Collectible Items Bag -->
+      <div class="passive-items-bag">
+        <div class="passive-items-header">
+          <h3 class="passive-title">
+            <span>🎒</span> Ek Yetenekler
+          </h3>
+          <span style="font-family: var(--font-game); font-size: 0.85rem; color: var(--accent-pink-hover);">
+            // Aktif
+          </span>
+        </div>
+
+        <div class="passive-badge-grid">
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">🎨</span>
+            <span>CSS3 / Flexbox / Grid</span>
+          </div>
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">🪐</span>
+            <span>Three.js &amp; 3D WebGL</span>
+          </div>
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">🚀</span>
+            <span>GSAP ScrollTrigger</span>
+          </div>
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">📱</span>
+            <span>Responsive Tasarım</span>
+          </div>
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">🐙</span>
+            <span>Git &amp; GitHub</span>
+          </div>
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">🤖</span>
+            <span>Yapay Zeka</span>
+          </div>
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">🔗</span>
+            <span>RESTful API</span>
+          </div>
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">✨</span>
+            <span>Mikro Etkileşimler</span>
+          </div>
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">🛡️</span>
+            <span>Tarayıcı Uyumluluğu</span>
+          </div>
+          <div class="passive-item-pill">
+            <span class="passive-item-emoji">⚡</span>
+            <span>Performans Optimizasyonu</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         03. EXPERIENCE SECTION (QUEST LOG)
+         ========================================================================== -->
+    <section class="section-wrap" id="experience">
+      <div class="section-island-header">
+        <div class="section-tag-badge">
+          <span>📜</span> 03 / GÖREV GÜNLÜĞÜ
+        </div>
+        <h2 class="section-island-title">Tamamlanan Görevler</h2>
+      </div>
+
+      <div class="quest-log-parchment">
+        <div class="quest-card-header">
+          <div>
+            <h3 class="quest-role-title">Frontend Developer Intern</h3>
+            <div class="quest-guild-name">
+              <span>🏛️</span> Anadolu Üniversitesi — BAUM (Bilgisayar Araştırma ve Uygulama Merkezi)
+            </div>
+          </div>
+
+          <div class="quest-rewards-badge">
+            <div class="quest-reward-val">+5,000 EXP 🌟</div>
+            <span style="font-family: var(--font-game); font-size: 0.78rem; color: var(--text-muted);">GÖREV ÖDÜLLERİ ALINDI</span>
+          </div>
+        </div>
+
+        <div class="quest-meta-chips">
+          <div class="quest-meta-chip">
+            <span>📅</span> Temmuz 2026 – Ağustos 2026 (2 ay)
+          </div>
+          <div class="quest-meta-chip">
+            <span>📍</span> Eskişehir, Türkiye
+          </div>
+          <div class="quest-meta-chip">
+            <span>🛡️</span> Rol: Frontend Stajyer
+          </div>
+        </div>
+
+        <ul class="quest-objectives-list">
+          <li class="quest-objective-item">
+            <div class="quest-check-bubble">✓</div>
+            <div>Üniversite web portalı modülleri üzerinde HTML5 ve CSS ile çalıştım.</div>
+          </li>
+          <li class="quest-objective-item">
+            <div class="quest-check-bubble">✓</div>
+            <div>JavaScript ile form doğrulama ve dinamik bileşenler geliştirdim.</div>
+          </li>
+          <li class="quest-objective-item">
+            <div class="quest-check-bubble">✓</div>
+            <div>SQL sorguları ile veri entegrasyonu yaptım.</div>
+          </li>
+          <li class="quest-objective-item">
+            <div class="quest-check-bubble">✓</div>
+            <div>Responsive tasarım prensiplerini uyguladım.</div>
+          </li>
+          <li class="quest-objective-item">
+            <div class="quest-check-bubble">✓</div>
+            <div>Git ile sürüm kontrolü ve takım çalışması yaptım.</div>
+          </li>
+        </ul>
+
+        <div class="quest-loot-footer">
+          <div class="quest-loot-label">
+            <span>⚔️</span> Kullanılan Teknolojiler:
+          </div>
+          <div class="quest-loot-pills">
+            <span class="loot-pill">HTML5</span>
+            <span class="loot-pill">JavaScript (ES6+)</span>
+            <span class="loot-pill">SQL</span>
+            <span class="loot-pill">Responsive Web</span>
+            <span class="loot-pill">Git</span>
+            <span class="loot-pill">UI Mimarisi</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         04. EDUCATION SECTION (ACADEMY TRAINING & PROGRESS RING)
+         ========================================================================== -->
+    <section class="section-wrap" id="education">
+      <div class="section-island-header">
+        <div class="section-tag-badge">
+          <span>🎓</span> 04 / EĞİTİM
+        </div>
+        <h2 class="section-island-title">Eğitim Bilgilerim</h2>
+      </div>
+
+      <div class="academy-card-wrap">
+        <div>
+          <h3 class="academy-inst-title">Anadolu Üniversitesi</h3>
+          <div class="academy-major-title">Ön Yüz Yazılım Geliştirme</div>
+          <p class="academy-desc-p">Frontend yazılım geliştirme üzerine iki yıllık akademik program.</p>
+
+          <div class="academy-dates-pill">
+            <span>📅</span>
+            <span>Eylül 2025 – Haziran 2027</span>
+            <span>• Eskişehir, Türkiye</span>
+          </div>
+        </div>
+
+        <!-- Circular Progress Ring -->
+        <div class="progress-ring-container">
+          <div class="ring-svg-wrap">
+            <svg class="ring-svg" width="150" height="150" viewBox="0 0 150 150">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f8a4c8" />
+                  <stop offset="50%" stop-color="#bfa3f5" />
+                  <stop offset="100%" stop-color="#8ee2c9" />
+                </linearGradient>
+              </defs>
+              <circle stroke="#f1e7fc" stroke-width="12" cx="75" cy="75" r="58" fill="transparent" />
+              <circle stroke="url(#ringGrad)" stroke-width="12" stroke-linecap="round" cx="75" cy="75" r="58" fill="transparent"
+                      stroke-dasharray="364.4" stroke-dashoffset="127.5" />
+            </svg>
+            <div class="ring-center-content">
+              <span style="font-size: 24px; margin-bottom: 2px;">🎓</span>
+              <span class="ring-percent">65%</span>
+              <span class="ring-label">İlerleme</span>
+            </div>
+          </div>
+
+          <div class="ring-sub-status">
+            2. Sınıf • 2027 Mezuniyet
+          </div>
+          <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.35rem; font-family: var(--font-game);">
+            Mezuniyet Görevi Devam Ediyor
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         05. CERTIFICATIONS SECTION (ACHIEVEMENT UNLOCKED POPUP)
+         ========================================================================== -->
+    <section class="section-wrap" id="certifications">
+      <div class="section-island-header">
+        <div class="section-tag-badge">
+          <span>🏆</span> 05 / SERTİFİKALAR
+        </div>
+        <h2 class="section-island-title">Başarı Kilidi Açıldı!</h2>
+      </div>
+
+      <div class="achievement-popup-box">
+        <div class="achievement-banner-top">
+          <span>🏆</span> Başarı Açıldı!
+        </div>
+
+        <div class="achievement-trophy-column">
+          <div class="golden-trophy-orb">🏆</div>
+          <div class="trophy-rarity-pill">🌟 EPİK NADİRLİK</div>
+        </div>
+
+        <div class="achievement-content-col">
+          <div class="achievement-verified-meta">
+            <span>✨ Onaylı Sertifika</span>
+            <span>• Aktif</span>
+          </div>
+
+          <h3 class="achievement-main-title">
+            Generative AI: From Prompts to Partnership
+          </h3>
+
+          <p class="achievement-desc-p">Yapay zeka prompt mühendisliği, yazılım geliştirme süreçlerinde AI entegrasyonu ve kod sentezi konularında sertifikalı yetkinlik.</p>
+
+          <div class="achievement-tags-row">
+            <span class="achieve-tag">🤖 Prompt Mühendisliği</span>
+            <span class="achieve-tag">⚡ İş Akışı Hızlandırma</span>
+            <span class="achieve-tag">🧠 AI İşbirliği</span>
+            <span class="achieve-tag">🛡️ Onaylı Yetkinlik</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         06. MAGIC LABORATORY & SPELL CASTING (INTERACTIVE)
+         ========================================================================== -->
+    <section class="section-wrap" id="magic-lab">
+      <div class="section-island-header">
+        <div class="section-tag-badge">
+          <span>🔮</span> 06 / BÜYÜ LABORATUVARI
+        </div>
+        <h2 class="section-island-title">Etkileşimli Büyüler</h2>
+        <p class="section-island-desc">
+          Ekrandaki büyü düğmelerine tıklayarak animasyonları keşfet!
+        </p>
+      </div>
+
+      <div class="magic-lab-panel">
+        <div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.85rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">
+            Büyü Kitabı 🪄
+          </h3>
+          <p style="font-size: 1.05rem; color: var(--text-secondary); font-weight: 600;">
+            Animasyonları tetiklemek için bir büyüye tıkla!
+          </p>
+
+          <div class="magic-spells-grid">
+            <button class="btn-spell-cast" id="spell-confetti">
+              <span style="font-size: 24px;">✨</span>
+              <span>Yıldız Yağmuru</span>
+            </button>
+
+            <button class="btn-spell-cast" id="spell-hearts">
+              <span style="font-size: 24px;">💖</span>
+              <span>Kalp Yağmuru</span>
+            </button>
+
+            <button class="btn-spell-cast" id="spell-mascot-jump">
+              <span style="font-size: 24px;">🌸</span>
+              <span>Maskotu Okşa</span>
+            </button>
+
+            <button class="btn-spell-cast" id="spell-sound-chime">
+              <span style="font-size: 24px;">🎵</span>
+              <span>Melodi Çal</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Code Preview Box -->
+        <div class="code-scroll-box">
+          <code>
+            <span class="code-comment">// Three.js Pastel Maskot Motoru</span><br />
+            <span class="code-kw">const</span> companion = <span class="code-kw">new</span> <span class="code-fn">THREE.Group</span>();<br />
+            <span class="code-kw">const</span> body = <span class="code-kw">new</span> <span class="code-fn">THREE.Mesh</span>(<br />
+            &nbsp;&nbsp;<span class="code-kw">new</span> <span class="code-fn">THREE.SphereGeometry</span>(<span class="code-str">1.4</span>, <span class="code-str">32</span>, <span class="code-str">32</span>),<br />
+            &nbsp;&nbsp;<span class="code-kw">new</span> <span class="code-fn">THREE.MeshStandardMaterial</span>({<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;color: <span class="code-str">0xffb8d2</span>, roughness: <span class="code-str">0.35</span><br />
+            &nbsp;&nbsp;})<br />
+            );<br />
+            companion.<span class="code-fn">add</span>(body);<br />
+            <span class="code-comment">// Akıcı süzülme dalgası</span><br />
+            companion.position.y = Math.<span class="code-fn">sin</span>(time) * <span class="code-str">0.2</span>;
+          </code>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         07. CONTACT SECTION (IN-GAME MAILBOX)
+         ========================================================================== -->
+    <section class="section-wrap" id="contact">
+      <div class="section-island-header">
+        <div class="section-tag-badge">
+          <span>💌</span> 07 / İLETİŞİM
+        </div>
+        <h2 class="section-island-title">Benimle İletişime Geç</h2>
+        <p class="section-island-desc">
+          Bir proje veya staj fırsatın mı var? Yaz bana!
+        </p>
+      </div>
+
+      <div class="contact-mailbox-window">
+        <div class="mailbox-info-left">
+          <div>
+            <h3 class="mailbox-heading">
+              Birlikte harika şeyler yaratalım ✨
+            </h3>
+            <p class="mailbox-desc">
+              Staj, proje veya işbirliği için her zaman yazabilirsin.
+            </p>
+
+            <!-- Animated Cute Envelope Card -->
+            <div class="envelope-visual-card">
+              <div class="envelope-svg-icon">💌</div>
+              <div>
+                <div style="font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: var(--text-main);">
+                  Güvercin Ekspres
+                </div>
+                <div style="font-family: var(--font-game); font-size: 0.85rem; color: var(--accent-pink-hover); font-weight: 600;">
+                  Türkiye'ye hızlı teslimat 🕊️
+                </div>
+              </div>
+            </div>
+
+            <div class="mailbox-cards-col">
+              <!-- Email Card -->
+              <div class="dispatch-item-card">
+                <div style="display: flex; align-items: center;">
+                  <div class="dispatch-icon-wrap">📬</div>
+                  <div class="dispatch-meta-wrap">
+                    <div class="dispatch-meta-label">E-posta</div>
+                    <a href="mailto:idilyucel22@gmail.com" class="dispatch-meta-val">idilyucel22@gmail.com</a>
+                  </div>
+                </div>
+                <button class="btn-copy-address" id="btn-copy-email" title="Panoya kopyala">
+                  <span id="copy-btn-label">Kopyala 📋</span>
+                </button>
+              </div>
+
+              <!-- LinkedIn Card -->
+              <div class="dispatch-item-card">
+                <div style="display: flex; align-items: center;">
+                  <div class="dispatch-icon-wrap">🤝</div>
+                  <div class="dispatch-meta-wrap">
+                    <div class="dispatch-meta-label">LinkedIn</div>
+                    <a href="https://www.linkedin.com/in/idil-y%C3%BCcel-a7ab19108" target="_blank" rel="noopener noreferrer" class="dispatch-meta-val">
+                      idil-yücel-a7ab19108
+                    </a>
+                  </div>
+                </div>
+                <a href="https://www.linkedin.com/in/idil-y%C3%BCcel-a7ab19108" target="_blank" rel="noopener noreferrer" class="btn-copy-address">
+                  Bağlan 🚀
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Server Status & Realm Clock -->
+          <div class="server-status-pill">
+            <span>📍 Bölge: Türkiye (GMT+3)</span>
+            <span class="live-clock-badge" id="live-server-clock">--:--:--</span>
+          </div>
+        </div>
+
+        <!-- Right: Flying Letter Form -->
+        <form class="flying-letter-form" id="flying-letter-form" onsubmit="event.preventDefault(); submitFlyingLetter();">
+          <div style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.35rem;">
+            Uçan Mektup Gönder 🕊️
+          </div>
+
+          <div>
+            <label class="form-group-label" for="sender-name">Adınız</label>
+            <input type="text" id="sender-name" class="game-input" placeholder="Adınız" required />
+          </div>
+
+          <div>
+            <label class="form-group-label" for="sender-email">E-posta Adresiniz</label>
+            <input type="email" id="sender-email" class="game-input" placeholder="eposta@ornek.com" required />
+          </div>
+
+          <div>
+            <label class="form-group-label" for="letter-msg">Mesajınız</label>
+            <textarea id="letter-msg" class="game-input game-textarea" placeholder="Projeniz veya fırsatınız hakkında yazın..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-game-primary" style="width: 100%;">
+            <span>💌</span> Mektubu Gönder
+          </button>
+
+          <div class="toast-alert toast-success" id="form-toast-alert">
+            ✓ Mektup gönderildi! E-posta istemcisi açılıyor... 🕊️✨
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-left-info">
+      <span>İdil Yücel • Tüm hakları saklıdır.</span>
+      <span class="footer-pixel-heart">💖</span>
+    </div>
+
+    <ul class="footer-links-list">
+      <li><a href="mailto:idilyucel22@gmail.com">E-posta</a></li>
+      <li><a href="https://www.linkedin.com/in/idil-y%C3%BCcel-a7ab19108" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href="#hero">Yukarı Çık</a></li>
+    </ul>
+
+    <button class="btn-return-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+      <span>🍄</span> Gökyüzüne Dön
+    </button>
+  </footer>
+
+  <!-- ==========================================================================
+       JAVASCRIPT: THREE.JS 3D MASCOT, SOUND SYNTHESIS, GSAP & LOGIC
+       ========================================================================== -->
+  <script>
+    /* ==========================================================================
+       1. CUTE SOUND FX SYNTHESIZER (WEB AUDIO API)
+       ========================================================================== */
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+
+      initContext() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            this.ctx = new AudioContext();
+          }
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playTone(freq, type = 'sine', duration = 0.1, gainVal = 0.12) {
+        if (!this.enabled) return;
+        this.initContext();
+        if (!this.ctx) return;
+
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      }
+
+      playPop() {
+        if (!this.enabled) return;
+        this.initContext();
+        if (!this.ctx) return;
+
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(450, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(800, this.ctx.currentTime + 0.08);
+
+          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.08);
+        } catch (e) {}
+      }
+
+      playChime() {
+        if (!this.enabled) return;
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, idx) => {
+          setTimeout(() => {
+            this.playTone(freq, 'sine', 0.35, 0.1);
+          }, idx * 75);
+        });
+      }
+
+      playJump() {
+        if (!this.enabled) return;
+        this.initContext();
+        if (!this.ctx) return;
+
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(300, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(900, this.ctx.currentTime + 0.2);
+
+          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.2);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.2);
+        } catch (e) {}
+      }
+    }
+
+    const sound = new SoundEngine();
+
+    const soundToggleBtn = document.getElementById('btn-sound-toggle');
+    const soundIcon = document.getElementById('sound-icon');
+    if (soundToggleBtn) {
+      soundToggleBtn.addEventListener('click', () => {
+        sound.initContext();
+        sound.enabled = !sound.enabled;
+        soundIcon.textContent = sound.enabled ? '🔊' : '🔇';
+        if (sound.enabled) sound.playChime();
+      });
+    }
+
+    document.querySelectorAll('a, button, .powerup-card, .btn-spell-cast').forEach(el => {
+      el.addEventListener('mouseenter', () => sound.playPop());
+      el.addEventListener('click', () => sound.playTone(650, 'sine', 0.1, 0.08));
+    });
+
+    /* ==========================================================================
+       2. PRELOADER & INITIALIZATION
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      const preloader = document.getElementById('preloader');
+      const progressBar = document.getElementById('preloader-progress-bar');
+      const progressNum = document.getElementById('preloader-num');
+      const statusMsg = document.getElementById('preloader-status-msg');
+
+      const messages = [
+        "Pastel bulutlar oluşturuluyor...",
+        "Frontend büyü kitapları kuşanılıyor...",
+        "3D maskot hazırlanıyor...",
+        "Macera başlamak üzere! ✨"
+      ];
+
+      let currentProg = 0;
+      const interval = setInterval(() => {
+        currentProg += Math.floor(Math.random() * 8) + 5;
+        if (currentProg > 100) currentProg = 100;
+
+        progressBar.style.width = currentProg + '%';
+        progressNum.textContent = currentProg + '%';
+
+        const msgIdx = Math.min(Math.floor((currentProg / 100) * messages.length), messages.length - 1);
+        statusMsg.textContent = messages[msgIdx];
+
+        if (currentProg >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            if (window.gsap) {
+              gsap.to(preloader, {
+                yPercent: -100,
+                duration: 0.85,
+                ease: 'power3.inOut',
+                onComplete: () => {
+                  preloader.style.display = 'none';
+                  triggerHeroAnimations();
+                  sound.playChime();
+                }
+              });
+            } else {
+              preloader.style.opacity = '0';
+              setTimeout(() => { preloader.style.display = 'none'; }, 500);
+            }
+          }, 350);
+        }
+      }, 40);
+    });
+
+    /* ==========================================================================
+       3. THREE.JS 3D KAWAII MASCOT ("PUFFI")
+       ========================================================================== */
+    let mascotScene, mascotCamera, mascotRenderer, mascotRoot;
+    let mascotBodyMesh, mascotHands = [], mascotMagicRing, floatingElements = [];
+    let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+    let isJumping = false;
+
+    function initThreeMascot() {
+      const canvas = document.getElementById('mascot-canvas');
+      const container = document.getElementById('mascot-stage-box');
+      if (!canvas || !container || !window.THREE) return;
+
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      mascotScene = new THREE.Scene();
+      mascotCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      mascotCamera.position.set(0, 0, 7.8);
+
+      mascotRenderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance'
+      });
+      mascotRenderer.setSize(width, height);
+      mascotRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Lighting (Warm pastel ambient + directional highlights)
+      const ambientLight = new THREE.HemisphereLight(0xfff6fa, 0xd8c8f0, 1.15);
+      mascotScene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.95);
+      dirLight.position.set(4, 6, 5);
+      mascotScene.add(dirLight);
+
+      const pinkPoint = new THREE.PointLight(0xff94b8, 1.3, 14);
+      pinkPoint.position.set(2.5, 1, 3.5);
+      mascotScene.add(pinkPoint);
+
+      const mintPoint = new THREE.PointLight(0x7ee0c8, 0.9, 14);
+      mintPoint.position.set(-2.5, -1, 3.5);
+      mascotScene.add(mintPoint);
+
+      // Mascot Group
+      mascotRoot = new THREE.Group();
+      mascotScene.add(mascotRoot);
+
+      // Materials
+      const bodyMat = new THREE.MeshStandardMaterial({
+        color: 0xffb8d2,
+        roughness: 0.35,
+        metalness: 0.05
+      });
+      const bellyMat = new THREE.MeshStandardMaterial({
+        color: 0xfff3f8,
+        roughness: 0.4
+      });
+      const eyeMat = new THREE.MeshStandardMaterial({
+        color: 0x221338,
+        roughness: 0.1,
+        metalness: 0.1
+      });
+      const pupilMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const blushMat = new THREE.MeshStandardMaterial({
+        color: 0xff6584,
+        transparent: true,
+        opacity: 0.7,
+        roughness: 0.5
+      });
+      const goldMat = new THREE.MeshStandardMaterial({
+        color: 0xffe066,
+        roughness: 0.2,
+        metalness: 0.4,
+        emissive: 0xffd13b,
+        emissiveIntensity: 0.25
+      });
+      const headsetMat = new THREE.MeshStandardMaterial({
+        color: 0x9be8d0,
+        roughness: 0.3
+      });
+
+      // A. Main Body (Cute squished sphere)
+      const bodyGeo = new THREE.SphereGeometry(1.4, 32, 32);
+      mascotBodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
+      mascotBodyMesh.scale.set(1.05, 0.94, 0.98);
+      mascotRoot.add(mascotBodyMesh);
+
+      // B. Belly Patch
+      const bellyGeo = new THREE.SphereGeometry(0.85, 24, 24);
+      const bellyMesh = new THREE.Mesh(bellyGeo, bellyMat);
+      bellyMesh.position.set(0, -0.22, 0.85);
+      bellyMesh.scale.set(1, 0.85, 0.35);
+      mascotRoot.add(bellyMesh);
+
+      // C. Kawaii Eyes (Dark base + double white specular highlights)
+      const eyeGeo = new THREE.SphereGeometry(0.2, 20, 20);
+      const bigPupilGeo = new THREE.SphereGeometry(0.075, 16, 16);
+      const smallPupilGeo = new THREE.SphereGeometry(0.038, 12, 12);
+
+      const eyeLeft = new THREE.Mesh(eyeGeo, eyeMat);
+      eyeLeft.position.set(-0.46, 0.15, 1.25);
+      const pupilL1 = new THREE.Mesh(bigPupilGeo, pupilMat);
+      pupilL1.position.set(-0.04, 0.06, 0.16);
+      const pupilL2 = new THREE.Mesh(smallPupilGeo, pupilMat);
+      pupilL2.position.set(0.06, -0.05, 0.16);
+      eyeLeft.add(pupilL1);
+      eyeLeft.add(pupilL2);
+      mascotRoot.add(eyeLeft);
+
+      const eyeRight = new THREE.Mesh(eyeGeo, eyeMat);
+      eyeRight.position.set(0.46, 0.15, 1.25);
+      const pupilR1 = new THREE.Mesh(bigPupilGeo, pupilMat);
+      pupilR1.position.set(-0.04, 0.06, 0.16);
+      const pupilR2 = new THREE.Mesh(smallPupilGeo, pupilMat);
+      pupilR2.position.set(0.06, -0.05, 0.16);
+      eyeRight.add(pupilR1);
+      eyeRight.add(pupilR2);
+      mascotRoot.add(eyeRight);
+
+      // D. Cheeks (Cute Blush)
+      const blushGeo = new THREE.SphereGeometry(0.18, 16, 16);
+      const blushLeft = new THREE.Mesh(blushGeo, blushMat);
+      blushLeft.position.set(-0.68, -0.08, 1.15);
+      blushLeft.scale.set(1, 0.5, 0.2);
+      mascotRoot.add(blushLeft);
+
+      const blushRight = new THREE.Mesh(blushGeo, blushMat);
+      blushRight.position.set(0.68, -0.08, 1.15);
+      blushRight.scale.set(1, 0.5, 0.2);
+      mascotRoot.add(blushRight);
+
+      // E. Antenna with Glowing Star Orb
+      const stemGeo = new THREE.CylinderGeometry(0.035, 0.035, 0.55, 16);
+      const antennaStem = new THREE.Mesh(stemGeo, new THREE.MeshStandardMaterial({ color: 0xffffff }));
+      antennaStem.position.set(0, 1.45, 0);
+      mascotRoot.add(antennaStem);
+
+      const starOrbGeo = new THREE.SphereGeometry(0.25, 20, 20);
+      const antennaOrb = new THREE.Mesh(starOrbGeo, goldMat);
+      antennaOrb.position.set(0, 1.75, 0);
+      mascotRoot.add(antennaOrb);
+
+      // F. Cute Side Headphones
+      const earGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.22, 24);
+      earGeo.rotateZ(Math.PI / 2);
+      const earL = new THREE.Mesh(earGeo, headsetMat);
+      earL.position.set(-1.42, 0.1, 0);
+      mascotRoot.add(earL);
+
+      const earR = new THREE.Mesh(earGeo, headsetMat);
+      earR.position.set(1.42, 0.1, 0);
+      mascotRoot.add(earR);
+
+      const archGeo = new THREE.TorusGeometry(1.45, 0.06, 16, 32, Math.PI);
+      const headsetArch = new THREE.Mesh(archGeo, headsetMat);
+      headsetArch.rotation.z = 0;
+      headsetArch.position.set(0, 0.05, 0);
+      mascotRoot.add(headsetArch);
+
+      // G. Floating Hands / Wings
+      const handGeo = new THREE.SphereGeometry(0.32, 16, 16);
+      const handL = new THREE.Mesh(handGeo, bodyMat);
+      handL.position.set(-1.75, -0.25, 0.2);
+      handL.scale.set(1, 0.8, 0.9);
+      mascotRoot.add(handL);
+      mascotHands.push(handL);
+
+      const handR = new THREE.Mesh(handGeo, bodyMat);
+      handR.position.set(1.75, -0.25, 0.2);
+      handR.scale.set(1, 0.8, 0.9);
+      mascotRoot.add(handR);
+      mascotHands.push(handR);
+
+      // H. Floating Magic Ring underneath
+      const ringGeo = new THREE.TorusGeometry(1.9, 0.06, 16, 60);
+      mascotMagicRing = new THREE.Mesh(ringGeo, new THREE.MeshStandardMaterial({
+        color: 0xffd4a8,
+        roughness: 0.3,
+        emissive: 0xffd4a8,
+        emissiveIntensity: 0.25
+      }));
+      mascotMagicRing.rotation.x = Math.PI / 2.3;
+      mascotMagicRing.position.set(0, -1.25, 0);
+      mascotRoot.add(mascotMagicRing);
+
+      // I. Fluffy Pastel Cloud Pedestal Base
+      const cloudPuffGeo = new THREE.SphereGeometry(0.55, 16, 16);
+      const cloudMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.6 });
+      const cloudGroup = new THREE.Group();
+      cloudGroup.position.set(0, -1.5, 0);
+
+      const puff1 = new THREE.Mesh(cloudPuffGeo, cloudMat);
+      puff1.position.set(-0.6, 0, 0);
+      puff1.scale.set(1.2, 0.8, 1);
+      cloudGroup.add(puff1);
+
+      const puff2 = new THREE.Mesh(cloudPuffGeo, cloudMat);
+      puff2.position.set(0.6, 0, 0);
+      puff2.scale.set(1.2, 0.8, 1);
+      cloudGroup.add(puff2);
+
+      const puff3 = new THREE.Mesh(cloudPuffGeo, cloudMat);
+      puff3.position.set(0, 0.15, 0);
+      puff3.scale.set(1.4, 0.9, 1.2);
+      cloudGroup.add(puff3);
+
+      mascotRoot.add(cloudGroup);
+
+      // 5. Floating Background Shapes
+      const shapesColors = [0xffb8d2, 0x8ce2c8, 0xc8a8ff, 0xffd3a8, 0xffea88];
+      for (let i = 0; i < 14; i++) {
+        let geo;
+        const type = i % 3;
+        if (type === 0) geo = new THREE.OctahedronGeometry(0.28, 0);
+        else if (type === 1) geo = new THREE.BoxGeometry(0.35, 0.35, 0.35);
+        else geo = new THREE.TorusGeometry(0.25, 0.08, 12, 20);
+
+        const mat = new THREE.MeshStandardMaterial({
+          color: shapesColors[i % shapesColors.length],
+          roughness: 0.3
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+
+        const angle = (i / 14) * Math.PI * 2;
+        const radius = 2.8 + Math.random() * 0.8;
+        mesh.position.set(
+          Math.cos(angle) * radius,
+          (Math.random() - 0.5) * 3.5,
+          (Math.random() - 0.5) * 2 - 1
+        );
+        mesh.userData = {
+          rotSpeedX: (Math.random() - 0.5) * 0.03,
+          rotSpeedY: (Math.random() - 0.5) * 0.03,
+          floatSpeed: 0.8 + Math.random() * 0.6,
+          initialY: mesh.position.y
+        };
+
+        mascotScene.add(mesh);
+        floatingElements.push(mesh);
+      }
+
+      // 6. Sparkling Particles Field
+      const partGeo = new THREE.BufferGeometry();
+      const partCount = 120;
+      const posArray = new Float32Array(partCount * 3);
+      for (let i = 0; i < partCount * 3; i += 3) {
+        posArray[i] = (Math.random() - 0.5) * 9;
+        posArray[i + 1] = (Math.random() - 0.5) * 8;
+        posArray[i + 2] = (Math.random() - 0.5) * 4;
+      }
+      partGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      const partMat = new THREE.PointsMaterial({
+        size: 0.08,
+        color: 0xffd4a8,
+        transparent: true,
+        opacity: 0.85
+      });
+      const particlesMesh = new THREE.Points(partGeo, partMat);
+      mascotScene.add(particlesMesh);
+
+      // Event Listeners
+      window.addEventListener('resize', onWindowResize);
+      container.addEventListener('mousemove', onMascotMouseMove);
+      canvas.addEventListener('click', triggerMascotJump);
+
+      // Animation Loop
+      let clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const elapsedTime = clock.getElapsedTime();
+
+        // Smooth Lerp Mouse Tracking
+        mouse.x += (mouse.targetX - mouse.x) * 0.07;
+        mouse.y += (mouse.targetY - mouse.y) * 0.07;
+
+        if (!isJumping) {
+          mascotRoot.position.y = Math.sin(elapsedTime * 2.2) * 0.16;
+          mascotRoot.rotation.y = mouse.x * 0.55;
+          mascotRoot.rotation.x = -mouse.y * 0.35;
+
+          if (mascotHands.length === 2) {
+            mascotHands[0].position.y = -0.25 + Math.sin(elapsedTime * 3 + 1) * 0.1;
+            mascotHands[1].position.y = -0.25 + Math.cos(elapsedTime * 3) * 0.1;
+          }
+
+          if (mascotMagicRing) {
+            mascotMagicRing.rotation.z = elapsedTime * 0.5;
+          }
+        }
+
+        floatingElements.forEach(mesh => {
+          mesh.rotation.x += mesh.userData.rotSpeedX;
+          mesh.rotation.y += mesh.userData.rotSpeedY;
+          mesh.position.y = mesh.userData.initialY + Math.sin(elapsedTime * mesh.userData.floatSpeed) * 0.2;
+        });
+
+        particlesMesh.rotation.y = elapsedTime * 0.05;
+        mascotRenderer.render(mascotScene, mascotCamera);
+      }
+      animate();
+    }
+
+    function onMascotMouseMove(e) {
+      const container = document.getElementById('mascot-stage-box');
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+      mouse.targetX = x;
+      mouse.targetY = y;
+    }
+
+    function onWindowResize() {
+      const container = document.getElementById('mascot-stage-box');
+      if (!container || !mascotCamera || !mascotRenderer) return;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      mascotCamera.aspect = width / height;
+      mascotCamera.updateProjectionMatrix();
+      mascotRenderer.setSize(width, height);
+    }
+
+    const dialogues = [
+      "Yaşasın! Zıpla zıpla! ✨",
+      "İdil harika arayüzler tasarlar! 💖",
+      "HTML5 + JS + SQL = Sihir! ⚡",
+      "Yeni görevler için hazır! 🚀",
+      "Birlikte güzel şeyler kodlayalım! 🌸",
+      "Seviye atlandı! +100 Neşe! ⭐"
+    ];
+    let dialogueIdx = 0;
+
+    function triggerMascotJump() {
+      if (!mascotRoot || isJumping) return;
+      isJumping = true;
+      sound.playJump();
+
+      const bubble = document.getElementById('mascot-bubble');
+      if (bubble) {
+        dialogueIdx = (dialogueIdx + 1) % dialogues.length;
+        bubble.textContent = dialogues[dialogueIdx];
+        if (window.gsap) {
+          gsap.fromTo(bubble, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' });
+        }
+      }
+
+      if (window.confetti) {
+        confetti({
+          particleCount: 28,
+          spread: 60,
+          origin: { y: 0.65 }
+        });
+      }
+
+      if (window.gsap) {
+        const startY = mascotRoot.position.y;
+        gsap.to(mascotRoot.position, {
+          y: startY + 0.9,
+          duration: 0.35,
+          yoyo: true,
+          repeat: 1,
+          ease: 'power2.out',
+          onComplete: () => { isJumping = false; }
+        });
+        gsap.to(mascotRoot.rotation, {
+          y: mascotRoot.rotation.y + Math.PI * 2,
+          duration: 0.7,
+          ease: 'power1.inOut'
+        });
+      } else {
+        setTimeout(() => { isJumping = false; }, 600);
+      }
+    }
+
+    const spinMascotBtn = document.getElementById('btn-spin-mascot');
+    if (spinMascotBtn) {
+      spinMascotBtn.addEventListener('click', triggerMascotJump);
+    }
+
+    document.querySelectorAll('.mascot-skin-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const hex = parseInt(pill.getAttribute('data-skin'), 16);
+        if (mascotBodyMesh && mascotBodyMesh.material) {
+          if (window.gsap) {
+            gsap.to(mascotBodyMesh.material.color, {
+              r: ((hex >> 16) & 255) / 255,
+              g: ((hex >> 8) & 255) / 255,
+              b: (hex & 255) / 255,
+              duration: 0.5
+            });
+          } else {
+            mascotBodyMesh.material.color.setHex(hex);
+          }
+          sound.playChime();
+        }
+      });
+    });
+
+    window.addEventListener('load', () => {
+      initThreeMascot();
+    });
+
+    /* ==========================================================================
+       4. GSAP ENTRANCE & SCROLLTRIGGER ANIMATIONS
+       ========================================================================== */
+    function triggerHeroAnimations() {
+      if (!window.gsap) return;
+
+      gsap.from('.hero-badge-pill', {
+        y: -30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'back.out(1.7)'
+      });
+
+      gsap.from('.hero-name', {
+        y: 40,
+        opacity: 0,
+        duration: 1.0,
+        delay: 0.15,
+        ease: 'elastic.out(1, 0.6)'
+      });
+
+      gsap.from('.hero-subtitle-box', {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.3,
+        ease: 'back.out(2)'
+      });
+
+      gsap.from('.hero-bio', {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.45,
+        ease: 'power2.out'
+      });
+
+      gsap.from('.rpg-stats-hud', {
+        y: 25,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.6,
+        ease: 'back.out(1.5)'
+      });
+
+      gsap.from('.hero-buttons-row', {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.75,
+        ease: 'back.out(1.7)'
+      });
+
+      gsap.from('.mascot-stage-card', {
+        scale: 0.85,
+        opacity: 0,
+        duration: 1.1,
+        delay: 0.3,
+        ease: 'elastic.out(1, 0.7)'
+      });
+    }
+
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      document.querySelectorAll('.section-island-header').forEach(header => {
+        gsap.from(header, {
+          scrollTrigger: {
+            trigger: header,
+            start: 'top 85%'
+          },
+          y: 40,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power3.out'
+        });
+      });
+
+      gsap.from('.rpg-character-window', {
+        scrollTrigger: {
+          trigger: '.rpg-character-window',
+          start: 'top 80%'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1.0,
+        ease: 'back.out(1.3)'
+      });
+
+      gsap.from('.powerup-card', {
+        scrollTrigger: {
+          trigger: '.skills-powerups-grid',
+          start: 'top 80%'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'back.out(1.5)'
+      });
+
+      gsap.from('.quest-log-parchment', {
+        scrollTrigger: {
+          trigger: '.quest-log-parchment',
+          start: 'top 80%'
+        },
+        scale: 0.92,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'back.out(1.4)'
+      });
+
+      gsap.from('.academy-card-wrap', {
+        scrollTrigger: {
+          trigger: '.academy-card-wrap',
+          start: 'top 80%'
+        },
+        y: 45,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'back.out(1.3)'
+      });
+
+      gsap.from('.achievement-popup-box', {
+        scrollTrigger: {
+          trigger: '.achievement-popup-box',
+          start: 'top 80%'
+        },
+        scale: 0.9,
+        opacity: 0,
+        duration: 1.0,
+        ease: 'elastic.out(1, 0.65)'
+      });
+
+      gsap.from('.magic-lab-panel', {
+        scrollTrigger: {
+          trigger: '.magic-lab-panel',
+          start: 'top 80%'
+        },
+        y: 45,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out'
+      });
+
+      gsap.from('.contact-mailbox-window', {
+        scrollTrigger: {
+          trigger: '.contact-mailbox-window',
+          start: 'top 80%'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1.0,
+        ease: 'back.out(1.3)'
+      });
+    }
+
+    /* ==========================================================================
+       5. MAGIC LAB SPELL BUTTONS & CELEBRATION
+       ========================================================================== */
+    const spellConfetti = document.getElementById('spell-confetti');
+    if (spellConfetti) {
+      spellConfetti.addEventListener('click', () => {
+        sound.playChime();
+        if (window.confetti) {
+          confetti({
+            particleCount: 80,
+            spread: 90,
+            origin: { y: 0.6 }
+          });
+        }
+      });
+    }
+
+    const spellHearts = document.getElementById('spell-hearts');
+    if (spellHearts) {
+      spellHearts.addEventListener('click', () => {
+        sound.playChime();
+        if (window.confetti) {
+          confetti({
+            shapes: ['circle'],
+            colors: ['#ff85a2', '#ff9eb5', '#ffb8d2', '#ffffff'],
+            particleCount: 60,
+            spread: 100,
+            origin: { y: 0.6 }
+          });
+        }
+      });
+    }
+
+    const spellMascotJump = document.getElementById('spell-mascot-jump');
+    if (spellMascotJump) {
+      spellMascotJump.addEventListener('click', () => {
+        triggerMascotJump();
+      });
+    }
+
+    const spellSoundChime = document.getElementById('spell-sound-chime');
+    if (spellSoundChime) {
+      spellSoundChime.addEventListener('click', () => {
+        sound.playChime();
+      });
+    }
+
+    /* ==========================================================================
+       6. THEME PALETTE CYCLE
+       ========================================================================== */
+    const themes = ['sakura', 'lilac', 'mint', 'peach'];
+    let currentThemeIdx = 0;
+    const themeBtn = document.getElementById('btn-theme-cycle');
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+        const newTheme = themes[currentThemeIdx];
+        document.documentElement.setAttribute('data-theme', newTheme);
+        sound.playChime();
+
+        const skinColors = {
+          sakura: 0xffb8d2,
+          lilac: 0xc8a8ff,
+          mint: 0x8ce2c8,
+          peach: 0xffd3a8
+        };
+        if (mascotBodyMesh && mascotBodyMesh.material) {
+          mascotBodyMesh.material.color.setHex(skinColors[newTheme]);
+        }
+      });
+    }
+
+    /* ==========================================================================
+       7. REALM CLOCK (GMT+3 TÜRKİYE TIME)
+       ========================================================================== */
+    function updateServerClock() {
+      const clockEl = document.getElementById('live-server-clock');
+      if (!clockEl) return;
+      const now = new Date();
+      const options = {
+        timeZone: 'Europe/Istanbul',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      };
+      clockEl.textContent = new Intl.DateTimeFormat('en-GB', options).format(now);
+    }
+    setInterval(updateServerClock, 1000);
+    updateServerClock();
+
+    /* ==========================================================================
+       8. COPY EMAIL TO CLIPBOARD
+       ========================================================================== */
+    const copyEmailBtn = document.getElementById('btn-copy-email');
+    if (copyEmailBtn) {
+      copyEmailBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('idilyucel22@gmail.com').then(() => {
+          sound.playChime();
+          const label = document.getElementById('copy-btn-label');
+          if (label) {
+            label.textContent = 'Kopyalandı! ✨';
+            setTimeout(() => { label.textContent = 'Kopyala 📋'; }, 2500);
+          }
+        });
+      });
+    }
+
+    /* ==========================================================================
+       9. FLYING LETTER FORM SUBMIT
+       ========================================================================== */
+    function submitFlyingLetter() {
+      const name = document.getElementById('sender-name').value;
+      const email = document.getElementById('sender-email').value;
+      const msg = document.getElementById('letter-msg').value;
+      const toast = document.getElementById('form-toast-alert');
+
+      sound.playChime();
+      if (window.confetti) {
+        confetti({
+          particleCount: 90,
+          spread: 80,
+          origin: { y: 0.7 }
+        });
+      }
+
+      if (toast) {
+        toast.style.display = 'block';
+        toast.textContent = `✓ Teşekkürler, ${name}! Uçan mektup İdil'e gönderildi! 🕊️✨`;
+      }
+
+      setTimeout(() => {
+        window.location.href = `mailto:idilyucel22@gmail.com?subject=İletişim: ${encodeURIComponent(name)}&body=${encodeURIComponent(msg + '\n\nGönderen: ' + email)}`;
+      }, 1400);
+    }
+
+    /* ==========================================================================
+       10. MOBILE MENU TOGGLE
+       ========================================================================== */
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileCloseBtn = document.getElementById('mobile-close-btn');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+
+    if (mobileMenuBtn && mobileDrawer) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileDrawer.classList.add('open');
+        sound.playPop();
+      });
+    }
+
+    if (mobileCloseBtn && mobileDrawer) {
+      mobileCloseBtn.addEventListener('click', () => {
+        mobileDrawer.classList.remove('open');
+      });
+    }
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (mobileDrawer) mobileDrawer.classList.remove('open');
+      });
+    });
+
+    /* ==========================================================================
+       11. CUSTOM CURSOR & SPARKLE TRAIL (DESKTOP)
+       ========================================================================== */
+    const cursor = document.getElementById('custom-cursor');
+    let lastSparkleTime = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      if (cursor) {
+        cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      }
+
+      const now = Date.now();
+      if (now - lastSparkleTime > 45) {
+        lastSparkleTime = now;
+        createCursorSparkle(e.clientX, e.clientY);
+      }
+    });
+
+    function createCursorSparkle(x, y) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'cursor-sparkle';
+      const size = Math.random() * 7 + 4;
+      sparkle.style.width = size + 'px';
+      sparkle.style.height = size + 'px';
+      sparkle.style.left = (x + (Math.random() - 0.5) * 12) + 'px';
+      sparkle.style.top = (y + (Math.random() - 0.5) * 12) + 'px';
+      document.body.appendChild(sparkle);
+
+      setTimeout(() => {
+        sparkle.remove();
+      }, 750);
+    }
+  </script>
+</body>
+</html>
